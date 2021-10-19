@@ -34,6 +34,7 @@ module.exports = {
     'vue/name-property-casing': ['error', 'PascalCase'],
     'vue/no-v-html': 'off',
     'accessor-pairs': 2,
+    'arrow-parens': 'off',
     'arrow-spacing': [
       2,
       {
@@ -104,6 +105,7 @@ module.exports = {
       }
     ],
     'linebreak-style': [0, 'error', 'windows'],
+    'max-len': ['error', { code: 300 }],
     'new-cap': [
       2,
       {
@@ -223,6 +225,7 @@ module.exports = {
       }
     ],
     'padded-blocks': [2, 'never'],
+    'prefer-destructuring': ['error', { object: true, array: false }],
     quotes: [
       2,
       'single',
@@ -254,15 +257,7 @@ module.exports = {
       2,
       'always',
       {
-        markers: [
-          'global',
-          'globals',
-          'eslint',
-          'eslint-disable',
-          '*package',
-          '!',
-          ','
-        ]
+        markers: ['global', 'globals', 'eslint', 'eslint-disable', '*package', '!', ',']
       }
     ],
     'template-curly-spacing': [2, 'never'],
