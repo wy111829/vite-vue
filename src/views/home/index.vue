@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { ElMessage } from '_element-plus@1.1.0-beta.20@element-plus'
+import { ElMessage } from 'element-plus'
 import api from '../../api'
 import IpInput from '../../components/IpInput.vue'
 import ConfimDialog from '../../components/confimDialog.vue'
