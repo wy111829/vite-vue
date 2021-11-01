@@ -1,12 +1,13 @@
 <script setup>
 import {
-  reactive, defineProps, getCurrentInstance, watch
+  ref, reactive, defineProps, defineEmits, watch
 } from 'vue'
 
 const props = defineProps({
   modelValue: String
 })
-const self = getCurrentInstance().ctx
+
+const emit = defineEmits(['update:modelValue'])
 const ipAdress = reactive([
   {
     value: ''
@@ -21,6 +22,12 @@ const ipAdress = reactive([
     value: ''
   }
 ])
+
+const inputRef = ref([])
+
+const setRef = (el) => {
+  inputRef.value.push(el)
+}
 
 // const formatter = (val) => {
 //   let value = val.toString()
@@ -44,7 +51,7 @@ watch(() => ipAdress, (newVal, oldVal) => {
   if (str === '000.000.000.000') {
     str = ''
   }
-  self.$emit('update:modelValue', str)
+  emit('update:modelValue', str)
 }, { deep: true })
 
 watch(() => props.modelValue, () => {
@@ -72,25 +79,25 @@ const turnIpPOS = (item, index, event) => {
   // 左箭头向左跳转，左一不做任何措施
   if (e.keyCode === 37) {
     if (index !== 0) {
-      self.$refs[`ipInput${index - 1}`].focus()
+      inputRef.value[index - 1].focus()
     }
   }
   // 删除键把当前数据删除完毕后会跳转到前一个input，左一不做任何处理
   if (e.keyCode === 8 && item.value.length === 0) {
     if (index !== 0) {
-      self.$refs[`ipInput${index - 1}`].focus()
+      inputRef.value[index - 1].focus()
     }
   }
   // 右箭头、回车键、空格键、冒号均向右跳转，右一不做任何措施
   if (e.keyCode === 39 || e.keyCode === 13 || e.keyCode === 32 || e.keyCode === 190) {
     if (index !== 3) {
-      self.$refs[`ipInput${index + 1}`].focus()
+      inputRef.value[index + 1].focus()
     }
   }
   // 满3位，光标自动向下一个文本框
   if (item.value.toString().length === 3) {
     if (index !== 3) {
-      self.$refs[`ipInput${index + 1}`].focus()
+      inputRef.value[index + 1].focus()
     }
   }
 }
@@ -98,7 +105,7 @@ const setDefaultVal = (item, index) => {
   // 当input失去焦点，而ip没有赋值时，会自动赋值为0
   const val = item.value
   if (val === '') {
-    ipAdress[index].value = ''
+    ipAdress[index + 1].value = ''
   }
 }
 
@@ -111,7 +118,7 @@ const setDefaultVal = (item, index) => {
         @input="checkIpVal(item, index)"
         @keyup="turnIpPOS(item, index, $event)"
         v-model="item.value"
-        :ref="'ipInput'+index"
+        :ref="setRef"
         @blur="setDefaultVal(item, index)" />
       <div></div>
     </li>

@@ -114,7 +114,7 @@ const refresh = () => {
 }
 
 onMounted(() => {
-  getInfo()
+  // getInfo()
 })
 
 </script>
